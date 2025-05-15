@@ -11,7 +11,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 
 
-local default_color_scheme = 'nord'
+local default_color_scheme = 'catppuccin'
 local themes = {
   nord = 'plugins.themes.nord',
   onedark = 'plugins.themes.onedark',
@@ -20,12 +20,12 @@ local themes = {
 
 local selected_theme = os.getenv("NVIM_THEME")
 
+-- load themes
 if not themes[selected_theme] then
-  vim.notify("Theme '" .. tostring(selected_theme) .. "' not found. Falling back to default.", vim.log.levels.WARN)
+  vim.notify("Theme '" .. tostring(selected_theme) .. "' not found. Applying default theme.", vim.log.levels.WARN)
   selected_theme = default_color_scheme
 end
 
--- Подключаем Lua-модуль темы (файл в lua/themes/)
 local ok, err = pcall(require, themes[selected_theme])
 if not ok then
   vim.notify("Error loading theme '" .. selected_theme .. "': " .. err, vim.log.levels.ERROR)
