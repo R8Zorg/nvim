@@ -11,24 +11,31 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 
 
--- Import color theme based on environment variable NVIM_THEME
-local default_color_scheme = 'catppuccin'
-local env_var_nvim_theme = os.getenv 'NVIM_THEME' or default_color_scheme
-
--- Define a table of theme modules
+local default_color_scheme = 'nord'
 local themes = {
-  nord = 'themes.nord',
-  onedark = 'themes.onedark',
-  catppuccin = 'themes.catppuccin',
+  nord = 'plugins.themes.nord',
+  onedark = 'plugins.themes.onedark',
+  catppuccin = 'plugins.themes.catppuccin',
 }
 
+local selected_theme = os.getenv("NVIM_THEME")
 
+if not themes[selected_theme] then
+  vim.notify("Theme '" .. tostring(selected_theme) .. "' not found. Falling back to default.", vim.log.levels.WARN)
+  selected_theme = default_color_scheme
+end
 
-
+-- Подключаем Lua-модуль темы (файл в lua/themes/)
+local ok, err = pcall(require, themes[selected_theme])
+if not ok then
+  vim.notify("Error loading theme '" .. selected_theme .. "': " .. err, vim.log.levels.ERROR)
+end
 
 vim.opt.rtp:prepend(lazypath)
 require "core.options"
 require "core.keymaps"
 require("snippets")
-require("lazy").setup("plugins")
-
+require("lazy").setup({
+  require(themes[selected_theme]),
+  { import = "plugins" },
+})
