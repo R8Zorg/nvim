@@ -19,7 +19,6 @@ vim.cmd("set scrolloff=10")
 vim.o.sidescrolloff = 8
 local venv_path = "./venv/bin/python" -- Относительный путь
 vim.g.python3_host_prog = venv_path
-
 vim.diagnostic.config({
         signs = {
                 text = {

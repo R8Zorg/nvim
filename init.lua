@@ -22,7 +22,7 @@ local selected_theme = os.getenv("NVIM_THEME")
 
 -- load themes
 if not themes[selected_theme] then
-  vim.notify("Theme '" .. tostring(selected_theme) .. "' not found. Applying default theme.", vim.log.levels.WARN)
+  -- vim.notify("Theme '" .. tostring(selected_theme) .. "' not found. Applying default theme.", vim.log.levels.WARN)
   selected_theme = default_color_scheme
 end
 

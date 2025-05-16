@@ -18,21 +18,18 @@ return {
 				"stylua", -- lua formatter
 				"eslint_d", -- ts/js linter
 				"shfmt",
-				-- "ruff",
-				-- "black",
+				"ruff",
 			},
 			-- auto-install configured formatters & linters (with null-ls)
 			automatic_installation = true,
 		})
 
 		local sources = {
-			-- null_ls.builtins.formatting.black,
-
 			diagnostics.checkmake,
 			formatting.prettier.with({ filetypes = { "html", "json", "yaml", "markdown" } }),
 			formatting.stylua,
 			formatting.shfmt.with({ args = { "-i", "4" } }),
-			formatting.terraform_fmt,
+			-- formatting.terraform_fmt,
 			-- require("none-ls.formatting.ruff").with({ extra_args = { "--extend-select", "I" } }),
 			-- require("none-ls.formatting.ruff_format"),
 		}
@@ -55,6 +52,6 @@ return {
 			-- 	end
 			-- end,
 		})
-		vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
+		-- vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
 	end,
 }
