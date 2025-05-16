@@ -18,7 +18,7 @@ return {
 				"stylua", -- lua formatter
 				"eslint_d", -- ts/js linter
 				"shfmt",
-				"ruff",
+				-- "ruff",
 			},
 			-- auto-install configured formatters & linters (with null-ls)
 			automatic_installation = true,

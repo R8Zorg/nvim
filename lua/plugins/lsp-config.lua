@@ -37,10 +37,11 @@ return { -- LSP Configuration & Plugins
 				vim.keymap.set("n", "<leader>gf", function()
 				  vim.lsp.buf.format({
 					filter = function(client)
-					  return client.name == "pylsp"
+						print("Formatting by client:", client.name)
+						return true
 					end,
 				  })
-				end, { desc = "Format with pylsp" })
+				end, { desc = "Format file" })
 				-- Jump to the definition of the word under your cursor.
 				--  This is where a variable was first declared, or where a function is defined, etc.
 				--  To jump back, press <C-T>.
