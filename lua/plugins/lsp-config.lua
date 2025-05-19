@@ -1,3 +1,4 @@
+local plugins = require("plugins")
 return { -- LSP Configuration & Plugins
 	"neovim/nvim-lspconfig",
 	dependencies = {
@@ -35,12 +36,12 @@ return { -- LSP Configuration & Plugins
 					vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 				end
 				vim.keymap.set("n", "<leader>gf", function()
-				  vim.lsp.buf.format({
-					filter = function(client)
-						print("Formatting by client:", client.name)
-						return true
-					end,
-				  })
+					vim.lsp.buf.format({
+						filter = function(client)
+							print("Formatting by client:", client.name)
+							return true
+						end,
+					})
 				end, { desc = "Format file" })
 				-- Jump to the definition of the word under your cursor.
 				--  This is where a variable was first declared, or where a function is defined, etc.
@@ -144,14 +145,10 @@ return { -- LSP Configuration & Plugins
 				settings = {
 					pylsp = {
 						plugins = {
-							pyflakes = { enabled = false },
-							pycodestyle = { enabled = false },
-							autopep8 = { enabled = false },
-							yapf = { enabled = false },
-							mccabe = { enabled = false },
-							pylsp_mypy = { enabled = false },
-							pylsp_black = { enabled = false },
-							pylsp_isort = { enabled = false },
+							pycodestyle = {
+								-- ignore = {"W391"},
+								maxLineLength = 80,
+							},
 						},
 					},
 				},
@@ -223,18 +220,29 @@ return { -- LSP Configuration & Plugins
 		local ensure_installed = vim.tbl_keys(servers or {})
 		vim.list_extend(ensure_installed, {
 			"stylua", -- Used to format lua code
+			"pylsp",
 		})
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
-
+		require"lspconfig".pylsp.setup{
+			settings = {
+				pylsp = {
+					plugins = {
+						pycodestyle = {
+							-- ignore = {"W391"},
+							maxLineLength = 80
+						}
+					}
+				}
+			}
+		}
 		require("mason-lspconfig").setup({
 			handlers = {
 				function(server_name)
-					local server = servers[server_name] or {}
-					-- This handles overriding only values explicitly passed
-					-- by the server configuration above. Useful when disabling
-					-- certain features of an LSP (for example, turning off formatting for tsserver)
-					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-					require("lspconfig")[server_name].setup(server)
+					local opts = servers[server_name] or {}
+					opts.capabilities = vim.tbl_deep_extend("force", {}, capabilities, opts.capabilities or {})
+					vim.print(server_name, opts.settings)
+					require("lspconfig")[server_name].setup(opts)
+					print("Setting up server: " .. server_name)
 				end,
 			},
 		})
