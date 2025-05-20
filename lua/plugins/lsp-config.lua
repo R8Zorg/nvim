@@ -35,14 +35,15 @@ return { -- LSP Configuration & Plugins
 				local map = function(keys, func, desc)
 					vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 				end
-				vim.keymap.set("n", "<leader>gf", function()
-					vim.lsp.buf.format({
-						filter = function(client)
-							print("Formatting by client:", client.name)
-							return true
-						end,
-					})
-				end, { desc = "Format file" })
+
+				-- vim.keymap.set("n", "<leader>gf", function()
+				-- 	vim.lsp.buf.format({
+				-- 		filter = function(client)
+				-- 			print("Formatting by client:", client.name)
+				-- 			return true
+				-- 		end,
+				-- 	})
+				-- end, { desc = "Format file" })
 				-- Jump to the definition of the word under your cursor.
 				--  This is where a variable was first declared, or where a function is defined, etc.
 				--  To jump back, press <C-T>.
@@ -141,33 +142,17 @@ return { -- LSP Configuration & Plugins
 					},
 				},
 			},
-			pylsp = {
-				settings = {
-					pylsp = {
-						plugins = {
-							pycodestyle = {
-								-- ignore = {"W391"},
-								maxLineLength = 80,
-							},
-						},
-					},
-				},
-			},
-			-- basedpyright = {
-			--   -- Config options: https://github.com/DetachHead/basedpyright/blob/main/docs/settings.md
-			--   settings = {
-			--     basedpyright = {
-			--       disableOrganizeImports = true, -- Using Ruff's import organizer
-			--       disableLanguageServices = false,
-			--       analysis = {
-			--         ignore = { '*' },                 -- Ignore all files for analysis to exclusively use Ruff for linting
-			--         typeCheckingMode = 'off',
-			--         diagnosticMode = 'openFilesOnly', -- Only analyze open files
-			--         useLibraryCodeForTypes = true,
-			--         autoImportCompletions = true,     -- whether pyright offers auto-import completions
-			--       },
-			--     },
-			--   },
+			-- pylsp = {
+			-- 	settings = {
+			-- 		pylsp = {
+			-- 			plugins = {
+			-- 				pycodestyle = {
+			-- 					-- ignore = {"W391"},
+			-- 					maxLineLength = 80,
+			-- 				},
+			-- 			},
+			-- 		},
+			-- 	},
 			-- },
 			ruff = {
 				-- Notes on code actions: https://github.com/astral-sh/ruff-lsp/issues/119#issuecomment-1595628355
@@ -223,28 +208,31 @@ return { -- LSP Configuration & Plugins
 			"pylsp",
 		})
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
-		require"lspconfig".pylsp.setup{
+		require("lspconfig").pylsp.setup({
+			on_attach = function(client, bufnr)
+				client.server_capabilities.documentFormattingProvider = false
+			end,
 			settings = {
 				pylsp = {
 					plugins = {
 						pycodestyle = {
-							-- ignore = {"W391"},
-							maxLineLength = 80
-						}
-					}
-				}
-			}
-		}
-		require("mason-lspconfig").setup({
-			handlers = {
-				function(server_name)
-					local opts = servers[server_name] or {}
-					opts.capabilities = vim.tbl_deep_extend("force", {}, capabilities, opts.capabilities or {})
-					vim.print(server_name, opts.settings)
-					require("lspconfig")[server_name].setup(opts)
-					print("Setting up server: " .. server_name)
-				end,
+							ignore = { "E203" },
+							maxLineLength = 80,
+						},
+					},
+				},
 			},
 		})
+		-- require("mason-lspconfig").setup({
+		-- 	handlers = {
+		-- 		function(server_name)
+		-- 			local opts = servers[server_name] or {}
+		-- 			opts.capabilities = vim.tbl_deep_extend("force", {}, capabilities, opts.capabilities or {})
+		-- 			vim.print(server_name, opts.settings)
+		-- 			require("lspconfig")[server_name].setup(opts)
+		-- 			print("Setting up server: " .. server_name)
+		-- 		end,
+		-- 	},
+		-- })
 	end,
 }
