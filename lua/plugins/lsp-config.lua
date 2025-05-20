@@ -35,15 +35,6 @@ return { -- LSP Configuration & Plugins
 				local map = function(keys, func, desc)
 					vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 				end
-
-				-- vim.keymap.set("n", "<leader>gf", function()
-				-- 	vim.lsp.buf.format({
-				-- 		filter = function(client)
-				-- 			print("Formatting by client:", client.name)
-				-- 			return true
-				-- 		end,
-				-- 	})
-				-- end, { desc = "Format file" })
 				-- Jump to the definition of the word under your cursor.
 				--  This is where a variable was first declared, or where a function is defined, etc.
 				--  To jump back, press <C-T>.
@@ -142,18 +133,6 @@ return { -- LSP Configuration & Plugins
 					},
 				},
 			},
-			-- pylsp = {
-			-- 	settings = {
-			-- 		pylsp = {
-			-- 			plugins = {
-			-- 				pycodestyle = {
-			-- 					-- ignore = {"W391"},
-			-- 					maxLineLength = 80,
-			-- 				},
-			-- 			},
-			-- 		},
-			-- 	},
-			-- },
 			ruff = {
 				-- Notes on code actions: https://github.com/astral-sh/ruff-lsp/issues/119#issuecomment-1595628355
 				-- Get isort like behavior: https://github.com/astral-sh/ruff/issues/8926#issuecomment-1834048218
@@ -209,9 +188,6 @@ return { -- LSP Configuration & Plugins
 		})
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 		require("lspconfig").pylsp.setup({
-			on_attach = function(client, bufnr)
-				client.server_capabilities.documentFormattingProvider = false
-			end,
 			settings = {
 				pylsp = {
 					plugins = {
