@@ -193,7 +193,7 @@ return { -- LSP Configuration & Plugins
 					plugins = {
 						pycodestyle = {
 							ignore = { "E203" },
-							maxLineLength = 80,
+							maxLineLength = 88,
 						},
 						autopep8 = { enabled = false },
 						yapf = {enabled = false }
