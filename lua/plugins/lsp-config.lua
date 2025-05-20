@@ -195,6 +195,8 @@ return { -- LSP Configuration & Plugins
 							ignore = { "E203" },
 							maxLineLength = 80,
 						},
+						autopep8 = { enabled = false },
+						yapf = {enabled = false }
 					},
 				},
 			},
