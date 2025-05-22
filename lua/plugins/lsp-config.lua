@@ -201,16 +201,16 @@ return { -- LSP Configuration & Plugins
 				},
 			},
 		})
-		-- require("mason-lspconfig").setup({
-		-- 	handlers = {
-		-- 		function(server_name)
-		-- 			local opts = servers[server_name] or {}
-		-- 			opts.capabilities = vim.tbl_deep_extend("force", {}, capabilities, opts.capabilities or {})
-		-- 			vim.print(server_name, opts.settings)
-		-- 			require("lspconfig")[server_name].setup(opts)
-		-- 			print("Setting up server: " .. server_name)
-		-- 		end,
-		-- 	},
-		-- })
+		require("mason-lspconfig").setup({
+			handlers = {
+				function(server_name)
+					local opts = servers[server_name] or {}
+					opts.capabilities = vim.tbl_deep_extend("force", {}, capabilities, opts.capabilities or {})
+					vim.print(server_name, opts.settings)
+					require("lspconfig")[server_name].setup(opts)
+					print("Setting up server: " .. server_name)
+				end,
+			},
+		})
 	end,
 }

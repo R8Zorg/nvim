@@ -18,8 +18,8 @@ return {
 				"stylua", -- lua formatter
 				"eslint_d", -- ts/js linter
 				"shfmt",
-				"black",
-				-- "ruff",
+				-- "black",
+				"ruff",
 			},
 			-- auto-install configured formatters & linters (with null-ls)
 			automatic_installation = true,
@@ -31,9 +31,9 @@ return {
 			formatting.stylua,
 			formatting.shfmt.with({ args = { "-i", "4" } }),
 			-- formatting.terraform_fmt,
-			-- require("none-ls.formatting.ruff").with({ extra_args = { "--extend-select", "I" } }),
-			-- require("none-ls.formatting.ruff_format"),
-			formatting.black,
+			require("none-ls.formatting.ruff").with({ extra_args = { "--extend-select", "I" } }),
+			require("none-ls.formatting.ruff_format"),
+			-- formatting.black,
 		}
 
 		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
