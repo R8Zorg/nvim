@@ -20,6 +20,7 @@ return {
 				"shfmt",
 				-- "black",
 				"ruff",
+				"mypy",
 			},
 			-- auto-install configured formatters & linters (with null-ls)
 			automatic_installation = true,
@@ -27,10 +28,11 @@ return {
 
 		local sources = {
 			diagnostics.checkmake,
+			diagnostics.mypy.with({ extra_args = { "--check-untyped-defs" } }),
 			formatting.prettier.with({ filetypes = { "html", "json", "yaml", "markdown" } }),
 			formatting.stylua,
 			formatting.shfmt.with({ args = { "-i", "4" } }),
-			-- formatting.terraform_fmt,
+			formatting.terraform_fmt,
 			require("none-ls.formatting.ruff").with({ extra_args = { "--extend-select", "I" } }),
 			require("none-ls.formatting.ruff_format"),
 			-- formatting.black,
