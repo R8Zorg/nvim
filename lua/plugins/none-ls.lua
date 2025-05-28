@@ -28,13 +28,13 @@ return {
 
 		local sources = {
 			diagnostics.checkmake,
-			diagnostics.mypy.with({ extra_args = { "--check-untyped-defs" } }),
+			diagnostics.mypy.with({ extra_args = {  "--strict" } }), -- "--check-untyped-defs",
 			formatting.prettier.with({ filetypes = { "html", "json", "yaml", "markdown" } }),
 			formatting.stylua,
 			formatting.shfmt.with({ args = { "-i", "4" } }),
 			formatting.terraform_fmt,
 			require("none-ls.formatting.ruff").with({ extra_args = { "--extend-select", "I" } }),
-			require("none-ls.formatting.ruff_format"),
+			require("none-ls.formatting.ruff_format").with({ extra_args = { "--line-length", "120" } }),
 			-- formatting.black,
 		}
 

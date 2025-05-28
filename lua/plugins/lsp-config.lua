@@ -48,7 +48,7 @@ return { -- LSP Configuration & Plugins
 				map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
 
 				-- Jump to the type of the word under your cursor.
-				--  Useful when you're not sure what type a variable is and you want to see
+				--  Useful when you're not sure what type a variable is and you want to seeAG
 				--  the definition of its *type*, not where it was *defined*.
 				map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
 
@@ -193,10 +193,10 @@ return { -- LSP Configuration & Plugins
 					plugins = {
 						pycodestyle = {
 							ignore = { "E203" },
-							maxLineLength = 88,
+							maxLineLength = 120,
 						},
 						autopep8 = { enabled = false },
-						yapf = {enabled = false }
+						yapf = { enabled = false },
 					},
 				},
 			},

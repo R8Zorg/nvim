@@ -1,6 +1,7 @@
 
 vim.keymap.set("n", "<C-h>", "<C-w>h", {})
 vim.keymap.set("n", "<C-l>", "<C-w>l", {})
+vim.keymap.set("n", "<C-e>", ":e<CR>", opts)
 -- Saving a file via Ctrl+S
 vim.keymap.set("i", "<C-s>", "<cmd>:w<CR>")
 vim.keymap.set("n", "<C-s>", "<cmd>:w<CR>")
