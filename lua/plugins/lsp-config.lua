@@ -184,7 +184,7 @@ return { -- LSP Configuration & Plugins
 		local ensure_installed = vim.tbl_keys(servers or {})
 		vim.list_extend(ensure_installed, {
 			"stylua", -- Used to format lua code
-			"pylsp",
+			"pylsp"
 		})
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 		require("lspconfig").pylsp.setup({
@@ -193,7 +193,7 @@ return { -- LSP Configuration & Plugins
 					plugins = {
 						pycodestyle = {
 							ignore = { "E203" },
-							maxLineLength = 120,
+							maxLineLength = 88,
 						},
 						autopep8 = { enabled = false },
 						yapf = { enabled = false },
@@ -201,6 +201,7 @@ return { -- LSP Configuration & Plugins
 				},
 			},
 		})
+		require('lspconfig').jdtls.setup({})
 		require("mason-lspconfig").setup({
 			handlers = {
 				function(server_name)

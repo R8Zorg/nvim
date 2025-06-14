@@ -12,6 +12,7 @@ vim.cmd("set shiftwidth=4")
 vim.cmd("set softtabstop=4")
 vim.cmd("set autoindent")
 vim.cmd("set smarttab")
+vim.opt.cursorline = true
 vim.g.mapleader = " "
 vim.opt.clipboard = "unnamedplus"
 vim.opt.swapfile = false

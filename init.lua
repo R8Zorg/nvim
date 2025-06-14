@@ -11,11 +11,14 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 
 
-local default_color_scheme = 'catppuccin'
+local default_color_scheme = "catppuccin"
 local themes = {
-  nord = 'plugins.themes.nord',
-  onedark = 'plugins.themes.onedark',
   catppuccin = 'plugins.themes.catppuccin',
+  onedark = 'plugins.themes.onedark',
+  nord = 'plugins.themes.nord',
+  dracula = 'plugins.themes.dracula',
+  sonokai = 'plugins.themes.sonokai',
+  onenord = 'plugins.themes.onenord',
 }
 
 local selected_theme = os.getenv("NVIM_THEME")
