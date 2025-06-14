@@ -28,7 +28,7 @@ return {
 
 		local sources = {
 			diagnostics.checkmake,
-			diagnostics.mypy.with({ extra_args = {  "--strict" } }), -- "--check-untyped-defs",
+			diagnostics.mypy.with({ extra_args = {  "--check-untyped-defs", "--ignore-missing-imports" } }), -- "--check-untyped-defs", "--strict"
 			formatting.prettier.with({ filetypes = { "html", "json", "yaml", "markdown" } }),
 			formatting.stylua,
 			formatting.shfmt.with({ args = { "-i", "4" } }),
