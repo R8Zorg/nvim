@@ -1,30 +1,27 @@
-local plugins = require("plugins")
-return { -- LSP Configuration & Plugins
+-- LSP Support
+return {
+	-- LSP Configuration
+	-- https://github.com/neovim/nvim-lspconfig
 	"neovim/nvim-lspconfig",
+	event = "VeryLazy",
 	dependencies = {
-		-- Automatically install LSPs and related tools to stdpath for neovim
-		"williamboman/mason.nvim",
-		"williamboman/mason-lspconfig.nvim",
-		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		-- LSP Management
+		-- https://github.com/williamboman/mason.nvim
+		{ "williamboman/mason.nvim" },
+		-- https://github.com/williamboman/mason-lspconfig.nvim
+		{ "williamboman/mason-lspconfig.nvim" },
 
-		-- Useful status updates for LSP.
-		-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-		{
-			"j-hui/fidget.nvim",
-			tag = "v1.4.0",
-			opts = {
-				progress = {
-					display = {
-						done_icon = "✓", -- Icon shown when all LSP progress tasks are complete
-					},
-				},
-				notification = {
-					window = {
-						winblend = 0, -- Background color opacity in the notification window
-					},
-				},
-			},
-		},
+		-- Auto-Install LSPs, linters, formatters, debuggers
+		-- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
+		{ "WhoIsSethDaniel/mason-tool-installer.nvim" },
+
+		-- Useful status updates for LSP
+		-- https://github.com/j-hui/fidget.nvim
+		{ "j-hui/fidget.nvim", opts = {} },
+
+		-- Additional lua configuration, makes nvim stuff amazing!
+		-- https://github.com/folke/neodev.nvim
+		{ "folke/neodev.nvim", opts = {} },
 	},
 	config = function()
 		vim.api.nvim_create_autocmd("LspAttach", {
@@ -40,8 +37,9 @@ return { -- LSP Configuration & Plugins
 				--  To jump back, press <C-T>.
 				map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
 
-				-- Find references for the word under your cursor.
-				map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+				-- WARN: This is not Goto Definition, this is Goto Declaration.
+				--  For example, in C this would take you to the header
+				map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
 				-- Jump to the implementation of the word under your cursor.
 				--  Useful when your language has ways of declaring types without an actual implementation.
@@ -52,13 +50,8 @@ return { -- LSP Configuration & Plugins
 				--  the definition of its *type*, not where it was *defined*.
 				map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
 
-				-- Fuzzy find all the symbols in your current document.
-				--  Symbols are things like variables, functions, types, etc.
-				map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-
-				-- Fuzzy find all the symbols in your current workspace
-				--  Similar to document symbols, except searches over your whole project.
-				map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+				-- Find references for the word under your cursor.
+				map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
 
 				-- Rename the variable under your cursor
 				--  Most Language Servers support renaming across files, etc.
@@ -68,13 +61,20 @@ return { -- LSP Configuration & Plugins
 				-- or a suggestion from your LSP for this to activate.
 				map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
+				-- Fuzzy find all the symbols in your current document.
+				--  Symbols are things like variables, functions, types, etc.
+				map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
+
+				-- Fuzzy find all the symbols in your current workspace
+				--  Similar to document symbols, except searches over your whole project.
+				map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+
+
+
 				-- Opens a popup that displays documentation about the word under your cursor
 				--  See `:help K` for why this keymap
 				map("K", vim.lsp.buf.hover, "Hover Documentation")
 
-				-- WARN: This is not Goto Definition, this is Goto Declaration.
-				--  For example, in C this would take you to the header
-				map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
 				map("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
 				map("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
@@ -101,93 +101,72 @@ return { -- LSP Configuration & Plugins
 				end
 			end,
 		})
-
-		local capabilities = vim.lsp.protocol.make_client_capabilities()
-		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-
-		-- Enable the following language servers
-		local servers = {
-			lua_ls = {
-				-- cmd = {...},
-				-- filetypes { ...},
-				-- capabilities = {},
-				settings = {
-					Lua = {
-						runtime = { version = "LuaJIT" },
-						workspace = {
-							checkThirdParty = false,
-							-- Tells lua_ls where to find all the Lua files that you have loaded
-							-- for your neovim configuration.
-							library = {
-								"${3rd}/luv/library",
-								unpack(vim.api.nvim_get_runtime_file("", true)),
-							},
-							-- If lua_ls is really slow on your computer, you can try this instead:
-							-- library = { vim.env.VIMRUNTIME },
-						},
-						completion = {
-							callSnippet = "Replace",
-						},
-						telemetry = { enable = false },
-						diagnostics = { disable = { "missing-fields" } },
-					},
-				},
-			},
-			ruff = {
-				-- Notes on code actions: https://github.com/astral-sh/ruff-lsp/issues/119#issuecomment-1595628355
-				-- Get isort like behavior: https://github.com/astral-sh/ruff/issues/8926#issuecomment-1834048218
-				commands = {
-					RuffAutofix = {
-						function()
-							vim.lsp.buf.execute_command({
-								command = "ruff.applyAutofix",
-								arguments = {
-									{ uri = vim.uri_from_bufnr(0) },
-								},
-							})
-						end,
-						description = "Ruff: Fix all auto-fixable problems",
-					},
-					RuffOrganizeImports = {
-						function()
-							vim.lsp.buf.execute_command({
-								command = "ruff.applyOrganizeImports",
-								arguments = {
-									{ uri = vim.uri_from_bufnr(0) },
-								},
-							})
-						end,
-						description = "Ruff: Format imports",
-					},
-				},
-			},
-			jsonls = {},
-			sqlls = {},
-			terraformls = {},
-			yamlls = {},
-			bashls = {},
-			dockerls = {},
-			docker_compose_language_service = {},
-			-- tailwindcss = {},
-			-- graphql = {},
-			-- html = { filetypes = { 'html', 'twig', 'hbs' } },
-			-- cssls = {},
-			-- ltex = {},
-			-- texlab = {},
-		}
-
-		-- Ensure the servers and tools above are installed
 		require("mason").setup()
-
-		-- You can add other tools here that you want Mason to install
-		-- for you, so that they are available from within Neovim.
-		local ensure_installed = vim.tbl_keys(servers or {})
-		vim.list_extend(ensure_installed, {
-			"stylua", -- Used to format lua code
-			"pylsp"
+		require("mason-lspconfig").setup({
+			automatic_enable = false,
+			-- Install these LSPs automatically
+			ensure_installed = {
+				"pylsp",
+				"bashls",
+				"cssls",
+				"html",
+				"gradle_ls",
+				-- "groovyls",
+				"lua_ls",
+				"jdtls",
+				"jsonls",
+				"lemminx",
+				"marksman",
+				"quick_lint_js",
+				"yamlls",
+			},
 		})
-		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
-		require("lspconfig").pylsp.setup({
+
+		require("mason-tool-installer").setup({
+			-- Install these linters, formatters, debuggers automatically
+			ensure_installed = {
+				"java-debug-adapter",
+				"java-test",
+				"stylua",
+			},
+		})
+
+		-- There is an issue with mason-tools-installer running with VeryLazy, since it triggers on VimEnter which has already occurred prior to this plugin loading so we need to call install explicitly
+		-- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim/issues/39
+		vim.api.nvim_command("MasonToolsInstall")
+
+		local lspconfig = require("lspconfig")
+		local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+		local lsp_attach = function(client, bufnr)
+			-- Create your keybindings here...
+		end
+
+		-- Call setup on each LSP server
+		require("mason-lspconfig").setup({
+			function(server_name)
+				-- Don't call setup for JDTLS Java LSP because it will be setup from a separate config
+				if server_name ~= "jdtls" then
+					lspconfig[server_name].setup({
+						on_attach = lsp_attach,
+						capabilities = lsp_capabilities,
+					})
+				end
+			end,
+		})
+
+		-- Lua LSP settings
+		lspconfig.lua_ls.setup({
+			settings = {
+				Lua = {
+					diagnostics = {
+						-- Get the language server to recognize the `vim` global
+						globals = { "vim" },
+					},
+				},
+			},
+		})
+
+		lspconfig.pylsp.setup({
 			settings = {
 				pylsp = {
 					plugins = {
@@ -201,17 +180,12 @@ return { -- LSP Configuration & Plugins
 				},
 			},
 		})
-		require('lspconfig').jdtls.setup({})
-		require("mason-lspconfig").setup({
-			handlers = {
-				function(server_name)
-					local opts = servers[server_name] or {}
-					opts.capabilities = vim.tbl_deep_extend("force", {}, capabilities, opts.capabilities or {})
-					vim.print(server_name, opts.settings)
-					require("lspconfig")[server_name].setup(opts)
-					print("Setting up server: " .. server_name)
-				end,
-			},
-		})
+		-- Globally configure all LSP floating preview popups (like hover, signature help, etc)
+		local open_floating_preview = vim.lsp.util.open_floating_preview
+		function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+			opts = opts or {}
+			opts.border = opts.border or "rounded" -- Set border to rounded
+			return open_floating_preview(contents, syntax, opts, ...)
+		end
 	end,
 }
