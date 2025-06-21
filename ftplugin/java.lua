@@ -146,6 +146,29 @@ local config = {
   },
 }
 
+vim.keymap.set("n", '<leader>go', function()
+  if vim.bo.filetype == 'java' then
+    require('jdtls').organize_imports();
+  end
+end)
+
+vim.keymap.set("n", '<leader>gu', function()
+  if vim.bo.filetype == 'java' then
+    require('jdtls').update_projects_config();
+  end
+end)
+
+vim.keymap.set("n", '<leader>tc', function()
+  if vim.bo.filetype == 'java' then
+    require('jdtls').test_class();
+  end
+end)
+
+vim.keymap.set("n", '<leader>tm', function()
+  if vim.bo.filetype == 'java' then
+    require('jdtls').test_nearest_method();
+  end
+end)
 -- Needed for debugging
 config["on_attach"] = function(client, bufnr)
   jdtls.setup_dap({ hotcodereplace = "auto" })
