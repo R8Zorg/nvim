@@ -77,10 +77,46 @@ return {
 					terminate = "",
 				},
 			},
+			layouts = {
+				{
+					elements = {
+						{
+							id = "scopes",
+							size = 0.50,
+						},
+						{
+							id = "stacks",
+							size = 0.30,
+						},
+						{
+							id = "watches",
+							size = 0.10,
+						},
+						{
+							id = "breakpoints",
+							size = 0.10,
+						},
+					},
+					size = 40,
+					position = "right", -- Can be "left" or "right"
+				},
+				{
+					elements = {
+						{
+							id = "repl",
+							size = 0.20,
+						},
+						{
+							id = "console",
+							size = 0.80
+						}
+					},
+					size = 20,
+					position = "bottom", -- Can be "bottom" or "top"
+				},
+			},
 		})
 
-		-- Install golang specific config
-		-- require('dap-go').setup()
 		require("dap-python").setup()
 
 		dap.configurations.java = {
