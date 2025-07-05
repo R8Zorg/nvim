@@ -146,13 +146,13 @@ local config = {
   },
 }
 
-vim.keymap.set("n", '<leader>go', function()
+vim.keymap.set("n", '<leader>oi', function()
   if vim.bo.filetype == 'java' then
     require('jdtls').organize_imports();
   end
 end)
 
-vim.keymap.set("n", '<leader>gu', function()
+vim.keymap.set("n", '<leader>up', function()
   if vim.bo.filetype == 'java' then
     require('jdtls').update_projects_config();
   end

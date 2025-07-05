@@ -19,6 +19,7 @@ local themes = {
   dracula = 'plugins.themes.dracula',
   sonokai = 'plugins.themes.sonokai',
   onenord = 'plugins.themes.onenord',
+  kanagawa = 'plugins.themes.kanagawa'
 }
 
 local selected_theme = os.getenv("NVIM_THEME")

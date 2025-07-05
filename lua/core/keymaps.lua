@@ -4,8 +4,8 @@ vim.keymap.set("n", "<C-h>", "<C-w>h", {})
 vim.keymap.set("n", "<C-l>", "<C-w>l", {})
 vim.keymap.set("n", "<C-e>", ":e<CR>", opts)
 -- Saving a file via Ctrl+S
-vim.keymap.set("i", "<C-s>", "<cmd>:w<CR>")
-vim.keymap.set("n", "<C-s>", "<cmd>:w<CR>")
+-- vim.keymap.set("i", "<C-s>", "<cmd>:w<CR>")
+vim.keymap.set("n", "<C-s>", "<cmd>:w<CR><cmd>:w<CR>") -- double save for JDTLS (Java)
 vim.keymap.set("n", "<Tab>", ":BufferLineCycleNext<CR>")
 vim.keymap.set("n", "<S-Tab>", ":BufferLineCyclePrev<CR>")
 vim.keymap.set("n", "<C-l>", ":BufferLineCloseOthers<CR>")
@@ -24,6 +24,7 @@ vim.keymap.set('n', '<Right>', ':vertical resize +2<CR>', opts)
 vim.keymap.set('n', '<Tab>', ':bnext<CR>', opts)
 vim.keymap.set('n', '<S-Tab>', ':bprevious<CR>', opts)
 vim.keymap.set('n', '<leader>cb', ':bdelete<CR>', opts)   -- close buffer
+vim.keymap.set('n', '<C-ESC>', ':bdelete<CR>', opts)   -- close buffer
 vim.keymap.set('n', '<leader>nb', '<cmd> enew <CR>', opts) -- new buffer
 
 -- Window management
@@ -48,6 +49,7 @@ vim.keymap.set('n', '<leader>lw', '<cmd>set wrap!<CR>', opts) -- Toggle line wra
 
 vim.keymap.set('v', 'p', '"_dP', opts) -- Keep last yanked when pasting
 vim.keymap.set('n', 'dd', '"_dd', opts) -- Do not copy deleted line
+vim.keymap.set('v', 'd', '"_d', opts) -- Do not copy deleted line
 
 -- LSP
 -- keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
