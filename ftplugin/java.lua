@@ -152,6 +152,12 @@ vim.keymap.set("n", '<leader>oi', function()
   end
 end)
 
+vim.keymap.set("n", '<leader>jc', function()
+  if vim.bo.filetype == 'java' then
+    require('jdtls').add_javadoc_comment();
+  end
+end)
+
 vim.keymap.set("n", '<leader>up', function()
   if vim.bo.filetype == 'java' then
     require('jdtls').update_projects_config();
