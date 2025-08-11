@@ -60,6 +60,9 @@ local keys = {
 for _, key in ipairs(keys) do
   vim.keymap.set({ "n", "v" }, key, '"_' .. key, { noremap = true })
 end
+for _, key in ipairs(keys) do
+  vim.keymap.set({ "n", "v" }, "<leader>" .. key, key, { noremap = true })
+end
 -- LSP
 -- keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
 -- keymap.set('n', '<leader>gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
