@@ -51,7 +51,6 @@ vim.keymap.set('n', '<leader>lw', '<cmd>set wrap!<CR>', opts) -- Toggle line wra
 -- vim.keymap.set('v', 'd', '"_d', opts) -- Do not copy deleted line
 local keys = {
   "d", "D", "dd",
-  "x", "X",
   "c", "C", "cc",
   "s", "S",
   "r", "R"
