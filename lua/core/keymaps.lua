@@ -46,14 +46,14 @@ vim.keymap.set('n', '<leader>tp', ':tabp<CR>', opts)     --  go to previous tab
 
 vim.keymap.set('n', '<leader>lw', '<cmd>set wrap!<CR>', opts) -- Toggle line wrapping
 
--- vim.keymap.set('v', 'p', '"_dP', opts) -- Keep last yanked when pasting
--- vim.keymap.set('n', 'dd', '"_dd', opts) -- Do not copy deleted line
 -- vim.keymap.set('v', 'd', '"_d', opts) -- Do not copy deleted line
+vim.keymap.set('v', 'p', '"_dP', opts) -- Keep last yanked when pasting
+vim.keymap.set('n', 'dd', '"_dd', opts) -- Do not copy deleted line
 local keys = {
-  "d", "D", "dd",
-  "c", "C", "cc",
+  "d", "D",
+  "c", "C",
   "s", "S",
-  "r", "R"
+  -- "r", "R"
 }
 
 for _, key in ipairs(keys) do
