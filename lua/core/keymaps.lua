@@ -46,10 +46,20 @@ vim.keymap.set('n', '<leader>tp', ':tabp<CR>', opts)     --  go to previous tab
 
 vim.keymap.set('n', '<leader>lw', '<cmd>set wrap!<CR>', opts) -- Toggle line wrapping
 
-vim.keymap.set('v', 'p', '"_dP', opts) -- Keep last yanked when pasting
-vim.keymap.set('n', 'dd', '"_dd', opts) -- Do not copy deleted line
-vim.keymap.set('v', 'd', '"_d', opts) -- Do not copy deleted line
+-- vim.keymap.set('v', 'p', '"_dP', opts) -- Keep last yanked when pasting
+-- vim.keymap.set('n', 'dd', '"_dd', opts) -- Do not copy deleted line
+-- vim.keymap.set('v', 'd', '"_d', opts) -- Do not copy deleted line
+local keys = {
+  "d", "D", "dd",
+  "x", "X",
+  "c", "C", "cc",
+  "s", "S",
+  "r", "R"
+}
 
+for _, key in ipairs(keys) do
+  vim.keymap.set({ "n", "v" }, key, '"_' .. key, { noremap = true })
+end
 -- LSP
 -- keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
 -- keymap.set('n', '<leader>gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
