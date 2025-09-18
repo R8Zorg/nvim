@@ -73,10 +73,6 @@ local config = {
         -- The runtimes' name parameter needs to match a specific Java execution environments.  See https://github.com/eclipse-jdtls/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request and search "ExecutionEnvironment".
         runtimes = {
           {
-            name = "JavaSE-17",
-            path = "/usr/lib/jvm/java-17-openjdk",
-          },
-          {
             name = "JavaSE-24",
             path = "/usr/lib/jvm/java-24-openjdk",
           },
