@@ -12,6 +12,9 @@ vim.keymap.set("n", "<C-q>", "<cmd>:qa<CR>") -- Quit
 vim.keymap.set('n', '<C-a>', 'ggVG', opts) -- Select all
 vim.keymap.set('n', '<Esc>', ':noh<CR>', opts) -- clear highlights
 vim.keymap.set('n', 'x', '"_x', opts) -- delete single character without copying into register
+--
+-- Russian layout
+vim.keymap.set("n", "<C-ы>", "<cmd>:w<CR>")
 
 -- Resize with arrows
 vim.keymap.set('n', '<Up>', ':resize -2<CR>', opts)
