@@ -63,7 +63,7 @@ local config = {
   settings = {
     java = {
       -- TODO Replace this with the absolute path to your main java version (JDTLS requires JDK 21 or higher)
-      home = "/usr/lib/jvm/java-24-openjdk/",
+      home = "/usr/lib/jvm/java-21-openjdk/",
       eclipse = {
         downloadSources = true,
       },
@@ -73,8 +73,8 @@ local config = {
         -- The runtimes' name parameter needs to match a specific Java execution environments.  See https://github.com/eclipse-jdtls/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request and search "ExecutionEnvironment".
         runtimes = {
           {
-            name = "JavaSE-24",
-            path = "/usr/lib/jvm/java-24-openjdk",
+            name = "JavaSE-21",
+            path = "/usr/lib/jvm/java-21-openjdk",
           },
         },
       },
