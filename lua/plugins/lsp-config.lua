@@ -202,10 +202,6 @@ return {
 			},
 		}
 		vim.lsp.enable("pylsp")
-        vim.lsp.config.html = {
-            filetypes = { "html", "htmldjango"}
-        }
-        vim.lsp.enable("html")
 
 		vim.lsp.enable("cssls")
 		-- Globally configure all LSP floating preview popups (like hover, signature help, etc)
