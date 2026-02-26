@@ -8,7 +8,7 @@ vim.keymap.set("n", "<C-s>", "<cmd>:w<CR><cmd>:w<CR>") -- double save for JDTLS 
 vim.keymap.set("n", "<Tab>", ":BufferLineCycleNext<CR>")
 vim.keymap.set("n", "<S-Tab>", ":BufferLineCyclePrev<CR>")
 vim.keymap.set("n", "<C-l>", ":BufferLineCloseOthers<CR>")
-vim.keymap.set("n", "<C-q>", "<cmd>:qa<CR>") -- Quit
+vim.keymap.set("n", "<C-q>", "<cmd>:qa!<CR>") -- Quit
 vim.keymap.set('n', '<C-a>', 'ggVG', opts) -- Select all
 vim.keymap.set('n', '<Esc>', ':noh<CR>', opts) -- clear highlights
 vim.keymap.set('n', 'x', '"_x', opts) -- delete single character without copying into register
