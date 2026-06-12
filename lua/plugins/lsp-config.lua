@@ -115,7 +115,6 @@ return {
 				"marksman",
 				"quick_lint_js",
 				"yamlls",
-				"omnisharp",
 			},
 		})
 
@@ -139,34 +138,9 @@ return {
 			-- Create your keybindings here...
 		end
 
-		-- Call setup on each LSP server
-		-- require("mason-lspconfig").setup({
-		--     function(server_name)
-		--         -- Don't call setup for JDTLS Java LSP because it will be setup from a separate config
-		--         if server_name ~= "jdtls" then
-		--             lspconfig[server_name].setup({
-		--                 on_attach = lsp_attach,
-		--                 capabilities = lsp_capabilities,
-		--             })
-		--         end
-		--     end,
-		-- })
 		require("mason-lspconfig").setup({
 			function(server_name)
 				if server_name == "jdtls" then
-					return
-				end
-				if server_name == "omnisharp" then
-					lspconfig.omnisharp.setup({
-						cmd = { vim.fn.stdpath("data") .. "/mason/bin/OmniSharp" },
-						handlers = { ["textDocument/definition"] = require("omnisharp_extended").handler },
-						capabilities = lsp_capabilities,
-						enable_roslyn_analyzers = true,
-						enable_import_completion = true,
-						organize_imports_on_format = true,
-						enable_decompilation_support = true,
-						filetypes = { "cs", "vb" },
-					})
 					return
 				end
 				lspconfig[server_name].setup({
@@ -175,17 +149,6 @@ return {
 				})
 			end,
 		})
-		vim.lsp.enable("omnisharp")
-		vim.lsp.config.lua_ls = {
-			settings = {
-				Lua = {
-					diagnostics = {
-						-- Get the language server to recognize the `vim` global
-						globals = { "vim" },
-					},
-				},
-			},
-		}
 
 		vim.lsp.config.pylsp = {
 			settings = {
