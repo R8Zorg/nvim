@@ -45,3 +45,4 @@ vim.diagnostic.config({
         },
 })
     vim.fn.sign_define('DiagnosticSignHint', { text = '󰌵', texthl = 'DiagnosticSignHint' })
+vim.opt.linebreak = true
