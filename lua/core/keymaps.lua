@@ -12,6 +12,7 @@ vim.keymap.set("n", "<C-q>", "<cmd>:qa!<CR>") -- Quit
 vim.keymap.set('n', '<C-a>', 'ggVG', opts) -- Select all
 vim.keymap.set('n', '<Esc>', ':noh<CR>', opts) -- clear highlights
 vim.keymap.set('n', 'x', '"_x', opts) -- delete single character without copying into register
+vim.keymap.set("i", "<C-BS>", "<C-w>")
 --
 -- Russian layout
 vim.keymap.set("n", "<C-ы>", "<cmd>:w<CR>")
@@ -27,8 +28,7 @@ vim.keymap.set('n', '<Right>', ':vertical resize +2<CR>', opts)
 vim.keymap.set('n', '<Tab>', ':bnext<CR>', opts)
 vim.keymap.set('n', '<S-Tab>', ':bprevious<CR>', opts)
 vim.keymap.set('n', '<leader>cb', ':bdelete<CR>', opts)   -- close buffer
--- vim.keymap.set('n', '<C-ESC>', ':bdelete<CR>', opts)   -- close buffer
-vim.keymap.set('n', '<C-ESC>', ':Neotree filesystem toggle <CR>:bdelete<CR>:Neotree filesystem toggle<CR>:wincmd l<CR>', opts)   -- close buffer
+vim.keymap.set('n', '<C-ESC>', ':bdelete<CR>', opts)   -- close buffer
 vim.keymap.set('n', '<leader>nb', '<cmd> enew <CR>', opts) -- new buffer
 
 -- Window management
