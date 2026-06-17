@@ -16,6 +16,12 @@ vim.keymap.set("i", "<C-BS>", "<C-w>")
 vim.keymap.set("n", "<leader>tt", ":lua vim.diagnostic.open_float()<CR>")
 
 
+-- Lazy, Mason, messages keymaps
+vim.keymap.set("n", "<leader>L", ":Lazy<CR>")
+vim.keymap.set("n", "<leader>M", ":Mason<CR>")
+vim.keymap.set("n", "<leader>m", ":messages<CR>")
+
+
 -- Comments
 vim.keymap.set("n", "<C-/>", "gcc", {remap=true, desc = "Comment line"})
 vim.keymap.set("v", "<C-/>", "gc", {remap=true, desc = "Comment selected block"})
