@@ -13,6 +13,7 @@ vim.keymap.set('n', '<C-a>', 'ggVG', opts) -- Select all
 vim.keymap.set('n', '<Esc>', ':noh<CR>', opts) -- clear highlights
 vim.keymap.set('n', 'x', '"_x', opts) -- delete single character without copying into register
 vim.keymap.set("i", "<C-BS>", "<C-w>")
+vim.keymap.set("n", "<leader>tt", ":lua vim.diagnostic.open_float()<CR>")
 --
 -- Russian layout
 vim.keymap.set("n", "<C-ы>", "<cmd>:w<CR>")
