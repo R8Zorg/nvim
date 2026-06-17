@@ -4,9 +4,9 @@ return {
     cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" },
     ft = { "markdown" },
     -- Use this command for build: :Lazy build markdown-preview.nvim
-    build = function()
-      vim.fn["mkdp#util#install"]()
-    end,
+    -- build = function()
+    --   vim.fn["mkdp#util#install"]()
+    -- end,
     init = function()
       vim.g.mkdp_auto_start = 1
       vim.g.mkdp_auto_close = 1
