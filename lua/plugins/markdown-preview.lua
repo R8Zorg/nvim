@@ -3,6 +3,7 @@ return {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" },
     ft = { "markdown" },
+    -- Use this command for build: :Lazy build markdown-preview.nvim
     build = function()
       vim.fn["mkdp#util#install"]()
     end,
